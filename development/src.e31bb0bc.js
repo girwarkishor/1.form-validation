@@ -193,6 +193,62 @@ module.hot.accept(reloadCSS);
 "use strict";
 
 require("./sass/main.scss");
+
+var form = document.getElementById("form");
+var username = document.getElementById("username");
+var email = document.getElementById("email");
+var password = document.getElementById("password");
+var password2 = document.getElementById("password2"); // Show input error message
+
+function showError(input, message) {
+  var formControl = input.parentElement;
+  formControl.className = "form-control error";
+  var small = formControl.querySelector("small");
+  small.innerText = message;
+} // Show success outline
+
+
+function showSuccess(input) {
+  var formControl = input.parentElement;
+  formControl.className = "form-control success";
+} // Check email is valid
+
+
+function isValidEmail(email) {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+} // Event listeners
+
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  if (username.value === "") {
+    showError(username, "Username is required");
+  } else {
+    showSuccess(username);
+  }
+
+  if (email.value === "") {
+    showError(email, "Email is required");
+  } else if (!isValidEmail(email.value)) {
+    showError(email, "Email is not valid");
+  } else {
+    showSuccess(email);
+  }
+
+  if (password.value === "") {
+    showError(password, "Password is required");
+  } else {
+    showSuccess(password);
+  }
+
+  if (password2.value === "") {
+    showError(password2, "Password 2 is required");
+  } else {
+    showSuccess(password2);
+  }
+});
 },{"./sass/main.scss":"sass/main.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
